@@ -1,2 +1,2 @@
 # EchoOS
-An Operating System with its Kernel
+I'm trying to build my own Operating System and its kernel (Project still in progress)
