@@ -4,8 +4,13 @@ ORG 0                           ; originate instruction
 section     .data
     ; some constants
     NULL            EQU     0
+    
+    ; Ralf Brown Interrupt List (RBIL) interrupts
     RBIL_VIDEO      EQU     0x10
+    RBIL_DISK       EQU     0x13
+    
     DISPLAY_CHAR    EQU     0Eh
+    READ_SECTOR     EQU     0x2
 
 section     .text
 global _start
@@ -29,11 +34,25 @@ step2:
     mov     sp, 0x7C00
 
     sti                         ; enables interrupts
+    
+    mov     ah, READ_SECTOR
+    mov     al, 0x1             ; number of sectors
+    mov     ch, 0               ; cylinder (low 8 bits)
+    mov     cl,0x2              ; sector number 2
+    mov     dh, 0x0             ; head number
+    mov     bx, buffer
+    int     RBIL_DISK
+    
+    jc      error               ; if the carry flag is set handle the error
+    
+    mov     si, buffer
+    call    print_message
 
-    mov     si, message
+    jmp     $                   ; infinite loop
+error:
+    mov     si, error_message
     call    print_message
     jmp     $                   ; infinite loop
-
 print_message:
     mov     bx, 0
 .loop:
@@ -49,7 +68,10 @@ print_char:
     mov     ah, DISPLAY_CHAR
     int     RBIL_VIDEO
     ret
-    
-message: db "Hello World!", 0   ; null terminated string
+
+error_message: db "Failed to laod sector", 0
+
 times 510- ($ - $$) db 0        ; padding
 dw  0xAA55                      ; magic number
+
+buffer: 
