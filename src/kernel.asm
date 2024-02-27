@@ -4,7 +4,7 @@ section     .data
     CODE_SEG    EQU     0x08
     DATA_SEG    EQU     0x10
 
-section     .text
+section     .asm
 global _start
 _start:
     mov ax, DATA_SEG
@@ -22,3 +22,5 @@ _start:
     out 0x92, al
 
     jmp $
+
+times 512-($ - $$) db 0
