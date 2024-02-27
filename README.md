@@ -4,3 +4,4 @@
 I'm trying to build my own Operating System and its kernel (Project still in progress). So far I implemented:
 - The bootloader
 - Global Descriptor Table (GDT), so I can switch to 32-bit Protected mode
+- A simple LBA driver to read from disk in protected mode (Because we can't use __int 0x13__ anymore)
