@@ -42,7 +42,7 @@ step2:
     or      eax, 0x1            ; set PE (Protection Enable) bit in CR0 (Control Register 0)
     mov     cr0, eax
 
-    jmp     CODE_SEG:load32 
+    jmp     CODE_SEG:load32
 
 ; --------------------------------------------
 
@@ -83,22 +83,68 @@ gdt_descriptor:
 ; --------------------------------------------
 
 BITS 32
-load32:
-    mov     ax, DATA_SEG
-    mov     ds, ax
-    mov     es, ax
-    mov     fs, ax
-    mov     gs, ax
-    mov     ss, ax
-    mov     ebp, 0x00200000
-    mov     esp, ebp
-    
-    ; Enable A20 line
-    in      al, 0x92
-    or      al, 2
-    out     0x92, al
 
-    jmp     $
+load32:
+    mov     eax, 1              ; starting sector
+    mov     ecx, 100            ; total number of sectors to load
+    mov     edi, 0x0100000      ; the address we want to load the sectors into
+    call    ata_lba_read
+
+    jmp     CODE_SEG:0x0100000  ; jump to the kernel
+
+; This is the driver that will load the kernel into memory
+ata_lba_read:
+    mov     ebx, eax
+    shr     eax, 24
+    or      eax, 0xE0           ; select the master drive
+    mov     dx, 0x1F6
+    out     dx, al
+
+    mov     eax, ecx
+    mov     dx, 0x1F2
+    out     dx, al
+
+    mov     eax, ebx
+    mov     dx, 0x1F3
+    out     dx, al
+
+    mov     dx, 0x1F4
+    mov     eax, ebx
+    shr     eax, 8
+    out     dx, al
+    
+    mov     dx, 0x1F5
+    mov     eax, ebx
+    shr     eax, 16
+    out     dx, al
+
+    mov     dx, 0x1F7
+    mov     al, 0x20
+    out     dx, al
+
+; read all sectors into memory
+.next_sector:
+    push    ecx
+    
+; checking if we need to read
+.try_again:
+    mov     dx, 0x1F7
+    in      al, dx
+    test    al, 8
+    jz      .try_again
+    
+    ; we need to read 256 words at a time
+    mov     ecx, 256
+    mov     dx, 0x1F0
+
+    ; rep: repeat until ECX equals 0
+    rep     insw            ; insw: Input word from I/O port specified in DX into memory location specified in ES:(E)DI (0x0100000 in this case)
+    pop     ecx
+    
+    loop    .next_sector
+
+    ; End of reading sectors into memory
+    ret
 
 times 510-($ - $$) db 0         ; padding
 dw  0xAA55                      ; magic number
