@@ -1,12 +1,10 @@
-BITS 32
+[BITS 32]
 
 extern  kernel_main
 
-section     .data
-    CODE_SEG    EQU     0x08
-    DATA_SEG    EQU     0x10
+CODE_SEG    EQU     0x08
+DATA_SEG    EQU     0x10
 
-section     .asm
 global _start
 _start:
     mov     ax, DATA_SEG
