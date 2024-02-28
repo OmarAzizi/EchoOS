@@ -5,3 +5,4 @@ I'm trying to build my own Operating System and its kernel (Project still in pro
 - The bootloader
 - Global Descriptor Table (GDT), so I can switch to 32-bit Protected mode
 - Simple LBA driver to read from disk in protected mode (Because we can't use __INT 0x13__ from BIOS anymore)
+- VGA 16-color text mode 
