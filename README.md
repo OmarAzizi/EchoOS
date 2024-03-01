@@ -11,6 +11,5 @@ I'm trying to build my own Operating System and its kernel (Project still in pro
 
 ## Demo
 This demo shows the output in qemu after I devided by zero in to trigger the interrupt 0 in IDT
-
 ![image](https://github.com/OmarAzizi/EchoOS/assets/110500643/bea5a44c-fa8d-4538-b1b9-4dd36e24034c)
 
