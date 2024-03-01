@@ -8,3 +8,6 @@ I'm trying to build my own Operating System and its kernel (Project still in pro
 - VGA 16-color text mode 
 - Interrupt Descriptor Table (IDT)
 - Simple memset function
+
+## Demo
+
