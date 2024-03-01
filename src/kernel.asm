@@ -24,4 +24,10 @@ _start:
     call    kernel_main
     jmp     $
 
+; This divides by zero to test interrupt 0 in the that we sat up in IDT
+global  problem
+problem:
+    mov     eax, 0
+    div     eax
+
 times 512-($ - $$) db 0
