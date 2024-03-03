@@ -9,8 +9,11 @@ I'm trying to build my own Operating System and its kernel (Project still in pro
 - VGA 16-color text mode 
 - Interrupt Descriptor Table (IDT)
 - Simple memset function
+- Remapped Master & Slave PICs
 
-## Demo
-This demo shows the output in qemu after I devided by zero in to trigger the interrupt 0 in IDT
+## Testing Interrupts
+This screenshot shows the output in qemu after I devided by zero in to trigger the interrupt 0 in IDT
 ![image](https://github.com/OmarAzizi/EchoOS/assets/110500643/bea5a44c-fa8d-4538-b1b9-4dd36e24034c)
 
+
+This screenshot shows the output after pressing a key on the keyboard (This is after remapping the PICs so the interrupt called here is 0x21)
