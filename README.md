@@ -1,4 +1,5 @@
 # EchoOS
+![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
 ![Assembly Icon](https://img.shields.io/badge/x86-Assembly-green?style=for-the-badge&logo=assembly)
 
 I'm trying to build my own Operating System and its kernel (Project still in progress). So far I implemented:
