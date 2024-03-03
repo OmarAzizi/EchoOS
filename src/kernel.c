@@ -1,5 +1,6 @@
 #include "kernel.h"
 #include "./idt/idt.h"
+#include "./io/io.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -56,12 +57,11 @@ void print(const char* str) {
         terminal_writechar(str[i], 15); 
 }
 
-extern void problem();
-
 void kernel_main() {
     terminal_initialize();
     idt_init(); // initialize Interrupt Descriptor Table
+
     print("Hello, World!\nMy Name is Omar :))\n\n");
 
-    problem(); // causing a problem (dividing by zero) to test interrupt 0 in IDT
+    enable_interrupts();
 }
