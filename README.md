@@ -17,3 +17,4 @@ This screenshot shows the output in qemu after I devided by zero in to trigger t
 
 
 This screenshot shows the output after pressing a key on the keyboard (This is after remapping the PICs so the interrupt called here is 0x21)
+![image](https://github.com/OmarAzizi/EchoOS/assets/110500643/3a9eef5d-fb3b-4b94-80e2-99bf8f2ffa7c)
