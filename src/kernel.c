@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include "./idt/idt.h"
 #include "./io/io.h"
+#include "memory/heap/kheap.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -59,9 +60,23 @@ void print(const char* str) {
 
 void kernel_main() {
     terminal_initialize();
-    idt_init(); // initialize Interrupt Descriptor Table
-
     print("Hello, World!\nMy Name is Omar :))\n\n");
+    
+    kheap_init(); 
 
+    idt_init(); // initialize Interrupt Descriptor Table
     enable_interrupts();
+
+    void* ptr = kalloc(50);
+    void* ptr2 = kalloc(5000);
+    void* ptr3 = kalloc(5600);
+
+    kfree(ptr);
+    void* ptr4 = kalloc(50);
+
+    if (ptr || ptr2 || ptr3 || ptr4) {
+        print("Initialized a variable in heap successfully :)\n");
+    }
+
+
 }
