@@ -8,4 +8,10 @@ void* kalloc(size_t);
 void  kfree(void*);
 void  kheap_init();
 
+/*
+    kzalloc is same as kalloc but will set 
+    the memory to nulls (zeros)
+*/
+void* kzalloc(size_t);
+
 #endif
