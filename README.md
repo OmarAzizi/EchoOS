@@ -35,7 +35,7 @@ To build the code successfully, you need to set up:
 1. [QEMU emulator](https://www.qemu.org/)
 2. [GCC Cross-Compiler](https://wiki.osdev.org/GCC_Cross-Compiler)
 3. A tree structure that looks like this (in the root of the project):
-
+```bash
 .
 ├── bin
 ├── build
@@ -44,4 +44,6 @@ To build the code successfully, you need to set up:
 │   └── memory
 │       ├── heap
 │       └── paging
+
+```
 
