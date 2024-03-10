@@ -2,6 +2,8 @@
 #include "./idt/idt.h"
 #include "./io/io.h"
 #include "memory/heap/kheap.h"
+#include "memory/paging/paging.h"
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -57,6 +59,7 @@ void print(const char* str) {
     for (int i = 0; i < len; ++i) 
         terminal_writechar(str[i], 15); 
 }
+static struct paging_4gb_chunk* kernel_chunk;
 
 void kernel_main() {
     terminal_initialize();
@@ -65,7 +68,6 @@ void kernel_main() {
     kheap_init(); 
 
     idt_init(); // initialize Interrupt Descriptor Table
-    enable_interrupts();
 
     void* ptr = kalloc(50);
     void* ptr2 = kalloc(5000);
@@ -77,6 +79,15 @@ void kernel_main() {
     if (ptr || ptr2 || ptr3 || ptr4) {
         print("Initialized a variable in heap successfully :)\n");
     }
+    
+    // setup paging
+    kernel_chunk = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
+    
+    // switch to kernel paging chunk
+    paging_switch(paging_4gb_chunk_get_directory(kernel_chunk));
+    
+    // enable paging
+    enable_paging();
 
-
+    enable_interrupts();
 }
