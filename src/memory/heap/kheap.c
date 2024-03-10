@@ -1,7 +1,6 @@
 #include "kheap.h"
 #include "heap.h"
 #include "../../kernel.h"
-#include <string.h>
 
 struct heap kernel_heap;
 struct heap_table kernel_heap_table;
