@@ -18,3 +18,29 @@ This screenshot shows the output in qemu after I devided by zero in to trigger t
 
 This screenshot shows the output after pressing a key on the keyboard (This is after remapping the PICs so the interrupt called here is 0x21)
 ![image](https://github.com/OmarAzizi/EchoOS/assets/110500643/3a9eef5d-fb3b-4b94-80e2-99bf8f2ffa7c)
+
+## Clone & Run
+Clone the repository
+```bash
+git clone https://github.com/OmarAzizi/EchoOS.git && cd EchoOS
+```
+
+Building the source and running it
+```bash
+./build.sh && make run
+```
+
+### Note
+To build the code successfully, you need to set up:
+1- QEMU
+2- Cross-Compilation
+3- A tree structure that looks like this (in the root of the project)
+.
+├── bin
+├── build
+│   ├── idt
+│   ├── io
+│   └── memory
+│       ├── heap
+│       └── paging
+
