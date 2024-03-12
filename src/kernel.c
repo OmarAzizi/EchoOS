@@ -63,22 +63,8 @@ static struct paging_4gb_chunk* kernel_chunk;
 
 void kernel_main() {
     terminal_initialize();
-    print("Hello, World!\nMy Name is Omar :))\n\n");
-    
     kheap_init(); 
-
     idt_init(); // initialize Interrupt Descriptor Table
-
-    void* ptr = kalloc(50);
-    void* ptr2 = kalloc(5000);
-    void* ptr3 = kalloc(5600);
-
-    kfree(ptr);
-    void* ptr4 = kalloc(50);
-
-    if (ptr || ptr2 || ptr3 || ptr4) {
-        print("Initialized a variable in heap successfully :)\n");
-    }
     
     // setup paging
     kernel_chunk = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
@@ -88,6 +74,15 @@ void kernel_main() {
     
     // enable paging
     enable_paging();
+    
+    char* ptr = kzalloc(4096);
+    paging_set(paging_4gb_chunk_get_directory(kernel_chunk), (void*)0x1000, (uint32_t)ptr | PAGING_ACCESS_FROM_ALL | PAGING_IS_PRESENT | PAGING_IS_WRITEABLE); 
+    
+    char* ptr2 = (char*) 0x1000;
+    ptr2[0] = 'A';
+    ptr2[1] = 'B';
+    print(ptr2);
+    print(ptr);
 
     enable_interrupts();
 }
