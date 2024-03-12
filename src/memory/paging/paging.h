@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 /* 
     defining bitmasks
@@ -30,5 +31,9 @@ uint32_t* paging_4gb_chunk_get_directory(struct paging_4gb_chunk*);
 
 // assembly function
 void enable_paging();
+
+
+int paging_set(uint32_t*, void*, uint32_t);
+bool paging_is_aligned(void*);
 
 #endif
