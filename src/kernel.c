@@ -65,6 +65,7 @@ static struct paging_4gb_chunk* kernel_chunk;
 void kernel_main() {
     terminal_initialize();
     kheap_init(); 
+    disk_search_and_init();
     idt_init(); // initialize Interrupt Descriptor Table
     
     // setup paging
@@ -77,7 +78,7 @@ void kernel_main() {
     enable_paging();
     
     char buf[512];
-    disk_read_sector(0, 1, buf);
+    disk_read_block(disk_get(0), 0, 1, buf);
 
     enable_interrupts();
 }
