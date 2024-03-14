@@ -11,7 +11,7 @@ I'm trying to build my own Operating System and its kernel (Project still in pro
 - Simple memset function
 - Remapped Master & Slave PICs
 - Dynamic memory (.e.g heap memory & malloc like functions)
-- Paging
+- Memory paging
 
 ## Testing Interrupts
 This screenshot shows the output in qemu after I devided by zero in to trigger the interrupt 0 in IDT
