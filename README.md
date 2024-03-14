@@ -41,6 +41,7 @@ To build the code successfully, you need to set up:
 .
 ├── bin
 ├── build
+│   ├── disk
 │   ├── idt
 │   ├── io
 │   └── memory
